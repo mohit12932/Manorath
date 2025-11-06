@@ -1,0 +1,112 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - Core user information
+model User {
+  id                String    @id @default(uuid()) @db.Uuid
+  name              String
+  email             String?
+  countryCode       String    // e.g., +1, +91
+  mobile            String    // normalized phone number
+  dob               DateTime?
+  gender            String?   // male, female, other, prefer_not_to_say
+  photoUrl          String?
+  isMobileVerified  Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  sessions          Session[]
+  events            Event[]
+  contacts          Contact[]
+
+  @@unique([countryCode, mobile])
+  @@index([mobile])
+  @@index([email])
+  @@map("users")
+}
+
+// OTP model - One-time password for authentication
+model Otp {
+  id          String   @id @default(uuid()) @db.Uuid
+  countryCode String
+  mobile      String
+  codeHash    String   // bcrypt hash of the OTP code
+  expiresAt   DateTime
+  attempts    Int      @default(0)
+  consumed    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([mobile, countryCode, expiresAt])
+  @@index([expiresAt]) // For cleanup jobs
+  @@map("otps")
+}
+
+// Session model - Refresh token sessions
+model Session {
+  id               String   @id @default(uuid()) @db.Uuid
+  userId           String   @db.Uuid
+  refreshTokenHash String   // bcrypt hash of refresh token
+  userAgent        String?
+  ip               String?
+  createdAt        DateTime @default(now())
+  expiresAt        DateTime
+
+  // Relations
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt]) // For cleanup jobs
+  @@map("sessions")
+}
+
+// Event model - Events created by users
+model Event {
+  id          String   @id @default(uuid()) @db.Uuid
+  title       String
+  description String   @db.Text
+  linkUrl     String?  // Event website/registration URL
+  bannerUrl   String?  // Event banner image
+  startsAt    DateTime // Event start date/time
+  isPublished Boolean  @default(true)
+  createdBy   String   @db.Uuid
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  creator     User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+
+  @@index([startsAt])
+  @@index([isPublished])
+  @@index([createdBy])
+  @@index([startsAt, isPublished]) // Composite index for efficient queries
+  @@map("events")
+}
+
+// Contact model - User's personal contacts/address book
+model Contact {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  name      String
+  email     String?
+  phone     String?
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, createdAt]) // For paginated queries
+  @@map("contacts")
+}

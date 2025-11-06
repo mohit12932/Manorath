@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:14-alpine
+    container_name: eventhub-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: eventhub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - eventhub-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # EventHub API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eventhub-api
+    environment:
+      DATABASE_URL: "postgresql://postgres:password@postgres:5432/eventhub?schema=public"
+      JWT_ACCESS_SECRET: "your-super-secret-access-key-change-me-in-production"
+      JWT_REFRESH_SECRET: "your-super-secret-refresh-key-change-me-in-production"
+      JWT_ACCESS_EXPIRY: "15m"
+      JWT_REFRESH_EXPIRY: "30d"
+      SMS_PROVIDER: "console"
+      STORAGE_DRIVER: "local"
+      UPLOAD_DIR: "./uploads"
+      APP_ORIGIN: "http://localhost:3000"
+      PORT: "3002"
+      NODE_ENV: "production"
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - eventhub-network
+    command: >
+      sh -c "npx prisma migrate deploy && node dist/server.js"
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  eventhub-network:
+    driver: bridge

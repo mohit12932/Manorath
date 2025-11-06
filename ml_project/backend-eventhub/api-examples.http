@@ -1,0 +1,200 @@
+### EventHub Backend API Examples
+### VS Code REST Client extension examples
+### Install: ext install humao.rest-client
+
+@baseUrl = http://localhost:3002
+@accessToken = YOUR_ACCESS_TOKEN_HERE
+@refreshToken = YOUR_REFRESH_TOKEN_HERE
+
+### Health Check
+GET {{baseUrl}}/healthz
+
+### ========================================
+### AUTH ENDPOINTS
+### ========================================
+
+### 1. Request OTP
+POST {{baseUrl}}/auth/request-otp
+Content-Type: application/json
+
+{
+  "countryCode": "+1",
+  "mobile": "1234567890"
+}
+
+### 2. Verify OTP (use OTP from console/SMS)
+POST {{baseUrl}}/auth/verify-otp
+Content-Type: application/json
+
+{
+  "countryCode": "+1",
+  "mobile": "1234567890",
+  "code": "123456"
+}
+
+### 3. Refresh Access Token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+### 4. Logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+### ========================================
+### PROFILE ENDPOINTS
+### ========================================
+
+### Get Current User Profile
+GET {{baseUrl}}/me
+Authorization: Bearer {{accessToken}}
+
+### Update Profile
+PUT {{baseUrl}}/me
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "dob": "1990-01-15T00:00:00Z",
+  "gender": "male"
+}
+
+### ========================================
+### EVENT ENDPOINTS
+### ========================================
+
+### List All Events (Public)
+GET {{baseUrl}}/events?page=1&pageSize=10&sortBy=startsAt&sortOrder=asc
+
+### List Events with Search
+GET {{baseUrl}}/events?q=tech&published=true
+
+### List Events with Date Filter
+GET {{baseUrl}}/events?from=2025-03-01T00:00:00Z&to=2025-12-31T23:59:59Z
+
+### Get Event by ID
+GET {{baseUrl}}/events/EVENT_ID_HERE
+
+### Create New Event
+POST {{baseUrl}}/events
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "My Awesome Event",
+  "description": "This is a comprehensive description of my event with all the details attendees need to know.",
+  "linkUrl": "https://myevent.example.com",
+  "bannerUrl": "https://example.com/banner.jpg",
+  "startsAt": "2025-12-15T18:00:00Z",
+  "isPublished": true
+}
+
+### Update Event
+PUT {{baseUrl}}/events/EVENT_ID_HERE
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "Updated Event Title",
+  "description": "Updated description",
+  "startsAt": "2025-12-20T19:00:00Z"
+}
+
+### Toggle Publish Status
+PATCH {{baseUrl}}/events/EVENT_ID_HERE/publish
+Authorization: Bearer {{accessToken}}
+
+### Delete Event
+DELETE {{baseUrl}}/events/EVENT_ID_HERE
+Authorization: Bearer {{accessToken}}
+
+### ========================================
+### CONTACT ENDPOINTS
+### ========================================
+
+### List Contacts
+GET {{baseUrl}}/contacts?page=1&pageSize=10
+Authorization: Bearer {{accessToken}}
+
+### Search Contacts
+GET {{baseUrl}}/contacts?q=john
+Authorization: Bearer {{accessToken}}
+
+### Get Contact by ID
+GET {{baseUrl}}/contacts/CONTACT_ID_HERE
+Authorization: Bearer {{accessToken}}
+
+### Create Contact
+POST {{baseUrl}}/contacts
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "phone": "+1234567890",
+  "notes": "Met at networking event"
+}
+
+### Update Contact
+PUT {{baseUrl}}/contacts/CONTACT_ID_HERE
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "Jane Smith Updated",
+  "email": "jane.updated@example.com",
+  "notes": "Updated notes"
+}
+
+### Delete Contact
+DELETE {{baseUrl}}/contacts/CONTACT_ID_HERE
+Authorization: Bearer {{accessToken}}
+
+### ========================================
+### UPLOAD ENDPOINTS
+### ========================================
+
+### Upload Profile Photo (multipart/form-data)
+POST {{baseUrl}}/upload/photo
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./path/to/profile.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Upload Event Banner (multipart/form-data)
+POST {{baseUrl}}/upload/banner
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="banner.jpg"
+Content-Type: image/jpeg
+
+< ./path/to/banner.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### ========================================
+### SWAGGER DOCUMENTATION
+### ========================================
+
+### Get Swagger JSON
+GET {{baseUrl}}/swagger.json
+
+### Open Swagger UI in Browser
+### http://localhost:3002/docs

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/ml_project/pubspec.yaml">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/ml_project/pubspec.yaml" />
+              <option name="originalContent" value="name: ml_project&#10;description: &quot;A Flutter ML project with event management&quot;&#10;publish_to: 'none'&#10;version: 1.0.0+1&#10;&#10;environment:&#10;  sdk: ^3.8.0&#10;&#10;dependencies:&#10;  flutter:&#10;    sdk: flutter&#10;&#10;  # State Management&#10;  provider: ^6.1.2&#10;&#10;  # HTTP &amp; API&#10;  http: ^1.2.2&#10;&#10;  # Secure Storage&#10;  flutter_secure_storage: ^9.2.2&#10;&#10;  # UI Components&#10;  cupertino_icons: ^1.0.8&#10;  country_code_picker: ^3.0.0&#10;  image_picker: ^1.1.2&#10;  pinput: ^5.0.0&#10;&#10;  # Storage &amp; Preferences&#10;  shared_preferences: ^2.3.3&#10;&#10;  # Image Processing&#10;  flutter_image_compress: ^2.3.0&#10;&#10;  # Validation&#10;  email_validator: ^3.0.0&#10;&#10;  # Date &amp; Time&#10;  intl: ^0.19.0&#10;&#10;  # Location&#10;  geolocator: ^13.0.2&#10;  google_maps_flutter: ^2.9.0&#10;&#10;  # Splash Screen&#10;  flutter_native_splash: ^2.4.1&#10;&#10;dev_dependencies:&#10;  flutter_test:&#10;    sdk: flutter&#10;  flutter_lints: ^4.0.0&#10;&#10;flutter:&#10;  uses-material-design: true&#10;&#10;  assets:&#10;    - assets/images/&#10;&#10;  fonts:&#10;    - family: Poppins&#10;      fonts:&#10;        - asset: fonts/Poppins-Regular.ttf&#10;        - asset: fonts/Poppins-Medium.ttf&#10;          weight: 500&#10;        - asset: fonts/Poppins-SemiBold.ttf&#10;          weight: 600&#10;        - asset: fonts/Poppins-Bold.ttf&#10;          weight: 700&#10;&#10;" />
+              <option name="updatedContent" value="name: ml_project&#10;description: &quot;A Flutter ML project with event management&quot;&#10;publish_to: 'none'&#10;version: 1.0.0+1&#10;&#10;environment:&#10;  sdk: ^3.8.0&#10;&#10;dependencies:&#10;  flutter:&#10;    sdk: flutter&#10;&#10;  # State Management&#10;  provider: ^6.1.2&#10;&#10;  # HTTP &amp; API&#10;  http: ^1.2.2&#10;&#10;  # Secure Storage&#10;  flutter_secure_storage: ^9.2.2&#10;&#10;  # UI Components&#10;  cupertino_icons: ^1.0.8&#10;  country_code_picker: ^3.0.0&#10;  image_picker: ^1.1.2&#10;  pinput: ^5.0.0&#10;&#10;  # Storage &amp; Preferences&#10;  shared_preferences: ^2.3.3&#10;&#10;  # Image Processing&#10;  flutter_image_compress: ^2.3.0&#10;&#10;  # Validation&#10;  email_validator: ^3.0.0&#10;&#10;  # Date &amp; Time&#10;  intl: ^0.19.0&#10;&#10;  # Location&#10;  geolocator: ^13.0.2&#10;  google_maps_flutter: ^2.9.0&#10;&#10;  # Splash Screen&#10;  flutter_native_splash: ^2.4.1&#10;&#10;dev_dependencies:&#10;  flutter_test:&#10;    sdk: flutter&#10;  flutter_lints: ^4.0.0&#10;&#10;flutter:&#10;  uses-material-design: true&#10;  &#10;  assets:&#10;    - assets/images/&#10;&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/ml_project/run-flutter.bat">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/ml_project/run-flutter.bat" />
+              <option name="updatedContent" value="@echo off&#10;echo ========================================&#10;echo Flutter App - Starting on Emulator&#10;echo ========================================&#10;echo.&#10;&#10;cd /d &quot;%~dp0&quot;&#10;&#10;echo Checking for available devices...&#10;flutter devices&#10;&#10;echo.&#10;echo Starting Flutter app...&#10;flutter run&#10;&#10;pause&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
