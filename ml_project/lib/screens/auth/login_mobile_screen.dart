@@ -129,10 +129,7 @@ class _LoginMobileScreenState extends State<LoginMobileScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors = isDarkMode
-        ? [const Color(0xFF020617), const Color(0xFF0B1220)]
-        : [const Color(0xFF0F172A), const Color(0xFF1E3A8A)];
+    const gradientColors = [Color(0xFF5B86E5), Color(0xFF36D1DC)];
 
     return Scaffold(
       body: Stack(
@@ -140,7 +137,7 @@ class _LoginMobileScreenState extends State<LoginMobileScreen>
           // Gradient Header
           Container(
             height: MediaQuery.of(context).size.height * 0.35,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -226,14 +223,13 @@ class _LoginMobileScreenState extends State<LoginMobileScreen>
 
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: isDarkMode
-                                            ? Colors.grey[850]
-                                            : Colors.grey[100],
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.circular(12),
                                         border: Border.all(
                                           color: _errorMessage != null
                                               ? Colors.red
-                                              : Colors.transparent,
+                                              : Colors.grey[300]!,
+                                          width: 1.5,
                                         ),
                                       ),
                                       child: Row(
